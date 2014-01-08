@@ -35,8 +35,9 @@ def get_stack():
 
 def get_instance(stack):
   stack_id = stack['StackId']
+  raw_instances = conn.describe_instances(stack_id)['Instances']
   instances = dict([(ins['Hostname'], ins) \
-    for ins in conn.describe_instances(stack_id)['Instances']])
+    for ins in raw_instances if ins['Status'] == 'online'])
   instance_names = dict([(i+1, ins) \
     for (i, ins) in enumerate(instances.keys())])
 
