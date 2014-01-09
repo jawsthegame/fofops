@@ -5,7 +5,7 @@ import os
 conn   = opsworks.OpsWorksConnection()
 
 def display_intro():
-  print '\nfofum - connect to your amazon opsworks instances'
+  print '\nfofops - connect to your amazon opsworks instances'
 
 def get_input_from_choices(choices, header, entity):
   print '\n%s\n------------------------------------------------' % header
