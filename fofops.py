@@ -52,7 +52,12 @@ def main():
   while True:
     stack = get_stack()
     instance = get_instance(stack)
-    os.system('ssh %s' % instance['PublicDns'])
+    if 'PublicDns' in instance:
+      os.system('ssh %s' % instance['PublicDns'])
+    elif 'PrivateIp' in instance:
+      os.system('ssh ubuntu@%s' % instance['PrivateIp'])
+    else:
+      print instance
 
 if __name__ == '__main__':
   main()
