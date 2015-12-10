@@ -55,7 +55,7 @@ def main():
     if 'PublicDns' in instance:
       os.system('ssh %s' % instance['PublicDns'])
     elif 'PrivateIp' in instance:
-      os.system('ssh ubuntu@%s' % instance['PrivateIp'])
+      os.system('ssh %s' % instance['PrivateIp'])
     else:
       print instance
 
