@@ -1,5 +1,6 @@
 import boto.opsworks.layer1 as opsworks
 import os
+import argparse
 
 
 conn   = opsworks.OpsWorksConnection()
@@ -47,17 +48,27 @@ def get_instance(stack):
 
   return instances[instance]
 
-def main():
+def main(ssh_args=''):
   display_intro()
   while True:
     stack = get_stack()
     instance = get_instance(stack)
     if 'PublicDns' in instance:
-      os.system('ssh %s' % instance['PublicDns'])
+      _ssh(instance['PublicDns'], args=ssh_args)
     elif 'PrivateIp' in instance:
-      os.system('ssh %s' % instance['PrivateIp'])
+      _ssh(instance['PrivateIp'], args=ssh_args)
     else:
       print instance
 
+def _ssh(ip='', args=''):
+  if args:
+    os.system('ssh %s %s' % (args, ip))
+  else:
+    os.system('ssh %s' % ip)
+
+
 if __name__ == '__main__':
-  main()
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-ssh-opts', '--ssh-opts', dest='ssh_args')
+  args = parser.parse_args()
+  main(ssh_args=args.ssh_args)
