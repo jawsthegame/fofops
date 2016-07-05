@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import boto.opsworks.layer1 as opsworks
 import os
 import argparse
